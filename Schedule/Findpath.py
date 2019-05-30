@@ -1,4 +1,5 @@
-from Traffic-Sign-Detection import WordDetect
+from TextDetection import WordDetect
+import argparse
 
 map = {'Start': 0, 'Start-1': 11, 'Start-2': 12, 'Start-3': 13, 'Start-4': 14, 'Yongsan': 20, 'Yangcheon': 21, 'Songpa': 22, 'Seongbuk': 23, 'Dongjak': 24, 'Seocho': 30, 'Seodaemun': 31, 'Mapo': 32, 'Jonno': 33, 'Guro': 34, 'Gwangjin': 40, 'Nowon': 41, 'Gwanak': 42, 'Gangnam': 43, 'Gangbuk': 44}
 READY = 1
@@ -7,6 +8,15 @@ ROTATE = 3
 WAIT = 4
 ROTATE_FORWARD = 5
 ROTATE_FORWARD_PUTDOWN = 6
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", type=str, help="path to input image")
+ap.add_argument("-east", "--east", type=str, help="path to input EAST text detector")
+ap.add_argument("-c", "--min-confidence", type=float, default=0.5, help="minimum probability required to inspect a region")
+ap.add_argument("-w", "--width", type=int, default=320, help="nearest multiple of 32 for resized width")
+ap.add_argument("-e", "--height", type=int, default=320, help="nearest multiple of 32 for resized height")
+ap.add_argument("-p", "--padding", type=float, default=0.0, help="amount of padding to add to each border of ROI")
+args = vars(ap.parse_args())
 
 class Node(object):
     def __init__(self, data):
@@ -113,7 +123,7 @@ def main (socket_location, socket_other_location, READY):
     print(myself.isEmpty())
     while(True):
         if (myself.isEmpty() == True and socket_location == (0, 0)):
-            destination = WordDetect
+            destination = WordDetect.main(args)
             if destination in map:
                 # destination_myself is the output of OCR text detection
                 myself = makeQueue(destination)
@@ -123,6 +133,8 @@ def main (socket_location, socket_other_location, READY):
         elif (READY == True):
             # between send command and receive ready, there should be no command to the car
             command(myself, socket_location, socket_other_location, destination)
+            READY = False
+            continue
         else:
             continue
 
@@ -130,7 +142,7 @@ def main (socket_location, socket_other_location, READY):
 if __name__ == '__main__':
     # import cho's socket and use it as an input
     # receive, send, main should be threaded
-    car1, car2 = AGV
+    car1, car2 = AGV()
     # for different host ip make AGV using the socket
     main(car1.location, car2.location, car1.status)
     main(car2.location, car1.location, car2.status)
