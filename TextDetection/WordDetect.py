@@ -12,6 +12,7 @@ import pytesseract
 import argparse
 import math
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+map = ['Start', 'Start-1', 'Start-2', 'Start-3', 'Start-4', 'Yongsan', 'Yangcheon', 'Songpa', 'Seongbuk', 'Dongjak', 'Seocho', 'Seodaemun', 'Mapo', 'Jonno', 'Guro', 'Gwangjin', 'Nowon', 'Gwanak', 'Gangnam', 'Gangbuk']
 
 def decode_predictions(scores, geometry):
     (numRows, numCols) = scores.shape[2:4]
@@ -101,6 +102,7 @@ def main(args):
         # tesseractOutputImage = np.zeros_like(orig)
         # origTesseract = orig.copy()
         results = []
+        text = ''
         for (startX, startY, endX, endY) in boxes:
             # scale the bounding box coordinates based on the respective
             # ratios
@@ -138,9 +140,11 @@ def main(args):
         # loop over the results
         for ((startX, startY, endX, endY), text) in results:
             # display the text OCR'd by Tesseract
-            print("OCR TEXT")
-            print("========")
-            print("{}\n".format(text))
+            #print("OCR TEXT")
+            #print("========")
+            #print("{}\n".format(text))
+            print(text)
+
             #return string type
 
             # strip out non-ASCII text so we can draw the text on the image
@@ -152,18 +156,20 @@ def main(args):
             cv2.rectangle(output, (startX, startY), (endX, endY), (0, 0, 255), 2)
             cv2.putText(output, text, (startX, startY - 20), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 3)
             #cv2.putText(output, StartX, (startX, -startY), cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 0, 255), 3)
-            print(startX, startY)
+            # print(startX, startY)
 
         fps.update()
         # show the output image
         #cv2.imshow("Text Detection", origTesseract)
         cv2.imshow("Text Detection", output)
         #print(startX, startY)
+        for loc in map:
+            if text == loc:
+                return text
         key = cv2.waitKey(1) & 0xFF
 
         if key == ord("q"):
             break
-
     # stop the timer and display FPS information
     fps.stop()
     print("[INFO] elasped time: {:.2f}".format(fps.elapsed()))
