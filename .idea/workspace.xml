@@ -3,12 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d75e949a-004c-4839-a687-68188abce2f8" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QR-Code-Extractor/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QR-Code-Extractor/qr_extractor.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QR-Code-Extractor/test.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Schedule/Findpath.py" beforeDir="false" afterPath="$PROJECT_DIR$/Schedule/Findpath.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TextDetection/WordDetect.py" beforeDir="false" afterPath="$PROJECT_DIR$/TextDetection/WordDetect.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/socket_server_v0.1.py" beforeDir="false" afterPath="$PROJECT_DIR$/socket_server_v0.1.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
