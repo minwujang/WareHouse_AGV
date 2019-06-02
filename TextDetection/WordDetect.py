@@ -68,6 +68,7 @@ def main(args):
     net = cv2.dnn.readNet("frozen_east_text_detection.pb")
 
     cap = VideoStream(src=0).start()
+    # cap = cv2.Videocapture(0)
     time.sleep(1.0)
     fps = FPS().start()
     while(True):
@@ -177,6 +178,7 @@ def main(args):
 
     # if we are using a webcam, release the pointer
     cap.stop()
+    # cap.release() when videocapture
     # close all windows
     cv2.destroyAllWindows()
 

@@ -17,15 +17,15 @@ WAIT = 4
 ROTATE_FORWARD = 5
 ROTATE_FORWARD_PUTDOWN = 6
 
-SERVER_IP_ADDRESS = "192.168.43.170"
+SERVER_IP_ADDRESS = "192.168.137.54"
 SERVER_PORT_NUM = 56774
 SERVER_PORT_RECV_A = 47182
 SERVER_PORT_RECV_B = 47183
 
-PI_IP_ADDRESS = "192.168.43.111"
+PI_IP_ADDRESS = "192.168.137.231"
 # PI2_IP_ADDRESS = "192.168.137.0"
 PI_PORT_NUM = 43179
-PI_CMD_PORT = 56227
+PI_CMD_PORT = 53181
 
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", type=str, help="path to input image")
@@ -45,6 +45,7 @@ class AGV(object):
     def __init__(self,_PORT_NUM):
         self.location = None
         self.status = False
+        self.destination = None
         # implies Ready or notReady(on action or positioning)
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server_socket.bind((SERVER_IP_ADDRESS, _PORT_NUM))
@@ -110,7 +111,7 @@ def makeQueue(destination):
         key = map[destination]
         x = key % 10
         y = int(key / 10)
-        print(x, y)
+        print('initialized a queue: (', x,', ', y,')')
 
         #for i in range(0, x + 1):
         for j in range(1, y + 1):
@@ -130,31 +131,39 @@ def command(myself, current_location_myself, current_location_other, destination
         key = map[destination_myself]
         i = key % 10
         j = int(key / 10)
+    print("destination is : ", i,", ", j)
 
     x = current_location_myself % 10
     y = int(current_location_myself / 10)
     coordinate_myself = (x, y)
+    print("my location is : ", coordinate_myself)
 
     a = current_location_other % 10
     b = int(current_location_other / 10)
     coordinate_other = (a, b)
+    print("other location is : ", coordinate_other)
 
     # car sending ready and his position at the origin after positioning and rotation, and no queue generated
     while (myself.isEmpty() == False):
         if (myself.peek() != coordinate_other):
             if (coordinate_myself == (0, 0) or coordinate_myself == (0, j) or coordinate_myself == (i, 0)):
+                print('lets send command')
                 send_cmd_to_pi(ROTATE_FORWARD)
                 print('sent ROTATE_FORWARD')
+                break
             elif (coordinate_myself == (i, j)):
                 send_cmd_to_pi(ROTATE_FORWARD_PUTDOWN)
                 print('sent ROTATE_FORWARD_PUTDOWN')
+                break
             else:
                 myself.dequeue()
                 send_cmd_to_pi(FORWARD)
                 print('sent FORWARD')
+                break
         else:
             send_cmd_to_pi(WAIT)
             print('sent WAIT')
+            break
 
 def send_cmd_to_pi(cmd):
     time.sleep(0.5)
@@ -162,20 +171,20 @@ def send_cmd_to_pi(cmd):
     # while True:
     cmd_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     cmd_socket.connect((PI_IP_ADDRESS, PI_CMD_PORT))
-
+    print("connected!!")
 
     payload_format = struct.Struct('i')
     data = [cmd]
     payload = payload_format.pack(*data)
+    print("pack the cmd")
 
     cmd_socket.send(payload)
+    print("sent the cmd")
     cmd_socket.close()
 
-def main (socket_location, socket_other_location, READY):
-    myself = makeQueue('Start')
-    # test whether myself.isEmtpy
-    print(myself.isEmpty())
+def main (socket_location, socket_other_location, state, myself, destination):
     while(True):
+        print(myself.isEmpty())
         if (myself.isEmpty() == True and socket_location == 0):
             destination = WordDetect.main(args)
             print('destionation is : ' + destination)
@@ -186,14 +195,20 @@ def main (socket_location, socket_other_location, READY):
                 print("queue has been made")
                 continue
             else:
+                print("loop")
                 continue
-        elif (READY == True):
+        elif (state == READY and socket_location != -1):
+            print("car is in READY state")
             # between send command and receive ready, there should be no command to the car
-            command(myself, socket_location, 33, destination)
+            command(myself, socket_location, socket_other_location, destination)
             print('command sent')
-            READY = False
-            continue
+            state = False
+            break
+        elif (socket_location == -1 or state == BUSY):
+            print("AGV is in action, not ready to receive command")
+            break
         else:
+            print("big loop")
             continue
 
 
@@ -201,22 +216,23 @@ if __name__ == '__main__':
     # import cho's socket and use it as an input
     # receive, send, main should be threaded
     car1 = AGV(SERVER_PORT_RECV_A)
-    #car2 = AGV(SERVER_PORT_RECV_B)
-
+    # car2 = AGV(SERVER_PORT_RECV_B)
+    car1queue = makeQueue('Start')
+    # car2queue = makeQueue('Start-1')
     while(True):
         conn1, addr1 = car1.server_socket.accept()
         # #conn2, addr2 = car2.server_socket.accept()
-        #
+        print('connected!')
         temp_msg1 = conn1.recv(1024)
+        print('received message')
         datagram_format = struct.Struct("? i")
         recv_list1 = datagram_format.unpack(temp_msg1)
         conn1.close()
         car1.status = int(recv_list1[0])
         car1.location = int(recv_list1[1])
 
-        print(car1.location)
-        print(car1.status)
-
+        print('the car location is :', car1.location)
+        print('the car status is :', car1.status)
 
         # temp_msg2 = conn2.recv(1024)
         # recv_list2 = datagram_format.unpack(temp_msg2)
@@ -225,5 +241,5 @@ if __name__ == '__main__':
         # car2.location = int(recv_list2[1])
 
         # for different host ip make AGV using the socket
-        main(car1.location, 33, car1.status)
+        main(car1.location, 33, car1.status, car1queue, car1.destination)
         # main(car2.location, car1.location, car2.status)
