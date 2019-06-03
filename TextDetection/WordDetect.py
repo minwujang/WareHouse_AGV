@@ -166,11 +166,15 @@ def main(args):
         #print(startX, startY)
         for loc in map:
             if text == loc:
+                fps.stop()
+                cap.stop()
+                cv2.destroyAllWindows()
                 return text
-        key = cv2.waitKey(1) & 0xFF
 
+        key = cv2.waitKey(1) & 0xFF
         if key == ord("q"):
             break
+
     # stop the timer and display FPS information
     fps.stop()
     print("[INFO] elasped time: {:.2f}".format(fps.elapsed()))

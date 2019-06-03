@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d75e949a-004c-4839-a687-68188abce2f8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Schedule/Findpath2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Schedule/Findpath.py" beforeDir="false" afterPath="$PROJECT_DIR$/Schedule/Findpath.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Schedule/Findpath2.py" beforeDir="false" afterPath="$PROJECT_DIR$/Schedule/Findpath2.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TextDetection/WordDetect.py" beforeDir="false" afterPath="$PROJECT_DIR$/TextDetection/WordDetect.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pi_code.py" beforeDir="false" afterPath="$PROJECT_DIR$/pi_code.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,8 +16,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TextDetection/WordDetect.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-184">
-              <caret line="168" column="27" lean-forward="true" selection-start-line="168" selection-start-column="27" selection-end-line="168" selection-end-column="27" />
+            <state relative-caret-position="999">
+              <caret line="176" selection-start-line="176" selection-end-line="176" />
               <folding>
                 <element signature="e#13#23#0" expanded="true" />
               </folding>
@@ -100,8 +97,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Schedule/Findpath2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="228" column="57" lean-forward="true" selection-start-line="228" selection-start-column="57" selection-end-line="228" selection-end-column="57" />
+            <state relative-caret-position="3401">
+              <caret line="179" column="25" lean-forward="true" selection-start-line="179" selection-start-column="25" selection-end-line="179" selection-end-column="25" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -135,8 +132,8 @@
         <option value="$PROJECT_DIR$/QRPosition/test.py" />
         <option value="$PROJECT_DIR$/RC_Car.py" />
         <option value="$PROJECT_DIR$/pi_code.py" />
-        <option value="$PROJECT_DIR$/TextDetection/WordDetect.py" />
         <option value="$PROJECT_DIR$/Schedule/Findpath.py" />
+        <option value="$PROJECT_DIR$/TextDetection/WordDetect.py" />
         <option value="$PROJECT_DIR$/Schedule/Findpath2.py" />
       </list>
     </option>
@@ -337,14 +334,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.19459888" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3179396" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3179396" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -448,16 +444,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TextDetection/WordDetect.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-184">
-          <caret line="168" column="27" lean-forward="true" selection-start-line="168" selection-start-column="27" selection-end-line="168" selection-end-column="27" />
-          <folding>
-            <element signature="e#13#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Schedule/Findpath.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="95">
@@ -465,10 +451,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TextDetection/WordDetect.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="999">
+          <caret line="176" selection-start-line="176" selection-end-line="176" />
+          <folding>
+            <element signature="e#13#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Schedule/Findpath2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="228" column="57" lean-forward="true" selection-start-line="228" selection-start-column="57" selection-end-line="228" selection-end-column="57" />
+        <state relative-caret-position="3401">
+          <caret line="179" column="25" lean-forward="true" selection-start-line="179" selection-start-column="25" selection-end-line="179" selection-end-column="25" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>

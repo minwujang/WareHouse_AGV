@@ -73,6 +73,10 @@ class Queue(object):
             self.tail is None
         return data
 
+    def dequeue_all(self):
+        while (self.isEmpty() == True) :
+            self.dequeue()
+
 class AGV(object):
     def __init__(self,_PORT_NUM):
         self.location = 0
@@ -159,7 +163,6 @@ class AGV(object):
         while (self.queue.isEmpty() == False):
             if (self.queue.peek() != coordinate_other):
                 if (coordinate_myself == (0, 0) or coordinate_myself == (0, j) or coordinate_myself == (i, 0)):
-                    print('lets send command')
                     send_cmd_to_pi(ROTATE_FORWARD)
                     print('sent ROTATE_FORWARD')
                     break
@@ -168,11 +171,12 @@ class AGV(object):
                     print('sent ROTATE_FORWARD_PUTDOWN')
                     break
                 else:
+                    if (coordinate_myself == (1, 0)):
+                        self.destination = None
+                        self.queue.dequeue_all()
                     self.queue.dequeue()
                     send_cmd_to_pi(FORWARD)
                     print('sent FORWARD')
-                    if self.location == 1 :
-                        self.destination = None
                     break
             else:
                 send_cmd_to_pi(WAIT)
