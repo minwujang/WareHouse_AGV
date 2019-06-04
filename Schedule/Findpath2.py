@@ -22,7 +22,7 @@ SERVER_PORT_NUM = 56774
 SERVER_PORT_RECV_A = 47182
 SERVER_PORT_RECV_B = 47183
 
-PI_IP_ADDRESS = "192.168.137.231"
+PI_IP_ADDRESS = "192.168.137.228"
 # PI2_IP_ADDRESS = "192.168.137.0"
 PI_PORT_NUM = 43179
 PI_CMD_PORT = 53181
@@ -74,7 +74,7 @@ class Queue(object):
         return data
 
     def dequeue_all(self):
-        while (self.isEmpty() == True) :
+        while (self.isEmpty() == False) :
             self.dequeue()
 
 class AGV(object):
@@ -171,13 +171,17 @@ class AGV(object):
                     print('sent ROTATE_FORWARD_PUTDOWN')
                     break
                 else:
-                    if (coordinate_myself == (1, 0)):
+                    if (coordinate_myself == (1, 0)):  # tracking point
                         self.destination = None
                         self.queue.dequeue_all()
-                    self.queue.dequeue()
-                    send_cmd_to_pi(FORWARD)
-                    print('sent FORWARD')
-                    break
+                        send_cmd_to_pi(FORWARD)
+                        print('Queue is empty and send forward')
+                        break
+                    else:
+                        self.queue.dequeue()
+                        send_cmd_to_pi(FORWARD)
+                        print('sent FORWARD')
+                        break
             else:
                 send_cmd_to_pi(WAIT)
                 print('sent WAIT')
